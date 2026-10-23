@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "قارام - سۈنئىي ئەقىل خاس ماھارەت ۋە بۇيرۇق قورالى",
+  "version": "1.0.0",
+  "description": "ئابۇنت زىيارەت قىلغان سۈنئىي ئەقىل سۇپىسىنىڭ خاس يوشۇرۇن بۇيرۇقلىرىنى ئاپتوماتىك بايقاش، كەسپىي بۇيرۇق تۈزۈش ۋە يەرلىك كۈچەيتكۈچ.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "قارام"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self';"
+  }
+}

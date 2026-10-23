@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "بىلىم - تور مەزمۇنىنى يىغىنچاقلىغۇچ",
+  "version": "1.0.0",
+  "description": "تور بەتلەردىكى ماقالە ۋە ئۇچۇرلارنى ئۇيغۇرچە يىغىنچاقلاش، مەنبە بايقاش ۋە ئاۋازدا ئوقۇش قىستۇرمىسى.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tts"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "بىلىم - تور يىغىنچاقلىغۇچ"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self';"
+  }
+}

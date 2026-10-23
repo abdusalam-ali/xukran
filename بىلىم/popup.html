@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بىلىم</title>
+  <style>
+    :root {
+      --bg-primary: rgba(255, 255, 255, 0.88);
+      --bg-surface: rgba(245, 247, 250, 0.8);
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: rgba(226, 232, 240, 0.8);
+      --accent-color: #0284c7;
+      --accent-hover: #0369a1;
+      --accent-light: rgba(2, 132, 199, 0.1);
+      --danger-color: #e11d48;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+      --blur-strength: blur(16px);
+      --font-stack: 'UKIJ Tuz', 'ALKATIP Basma', 'Uyghur Pashto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: rgba(15, 23, 42, 0.92);
+      --bg-surface: rgba(30, 41, 59, 0.7);
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border-color: rgba(51, 65, 85, 0.8);
+      --accent-color: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --accent-light: rgba(56, 189, 248, 0.15);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-stack);
+    }
+
+    body {
+      width: 380px;
+      min-height: 540px;
+      max-height: 590px;
+      background-color: var(--bg-primary);
+      backdrop-filter: var(--blur-strength);
+      -webkit-backdrop-filter: var(--blur-strength);
+      color: var(--text-primary);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px;
+      direction: rtl;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    body::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    /* باش قىسمى */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .brand-name {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .brand-tag {
+      font-size: 11px;
+      background: var(--accent-light);
+      color: var(--accent-color);
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--accent-light);
+      color: var(--accent-color);
+    }
+
+    /* ئاگاھلاندۇرۇش / تەڭشەك كارتىسى */
+    .settings-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+
+    .settings-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .settings-content {
+      margin-top: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .settings-content.open {
+      display: flex;
+    }
+
+    .api-input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-radius: 6px;
+      font-size: 12px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .api-input:focus {
+      outline: 2px solid var(--accent-color);
+      border-color: transparent;
+    }
+
+    .api-save-btn {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      align-self: flex-end;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .api-save-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* مەشغۇلات كۇنۇپكىلىرى */
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent-color);
+      color: #ffffff;
+      grid-column: span 2;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .btn-danger {
+      background: rgba(225, 29, 72, 0.1);
+      color: var(--danger-color);
+      border-color: rgba(225, 29, 72, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    /* ھالەت ئۇچۇرى */
+    .status-badge {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 12px;
+      min-height: 18px;
+    }
+
+    /* يىغىنچاق مەزمۇن كارتىسى */
+    .result-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .content-paragraph {
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    /* مەنبە ۋە مۇناسىۋەتلىك ئۇچۇرلار بۆلىكى */
+    .meta-box {
+      background: var(--bg-surface);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .meta-item strong {
+      color: var(--text-primary);
+    }
+
+    .source-link {
+      color: var(--accent-color);
+      text-decoration: none;
+      word-break: break-all;
+      direction: ltr;
+      display: inline-block;
+      text-align: left;
+    }
+
+    .source-link:hover {
+      text-decoration: underline;
+    }
+
+    .key-points-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 8px 0;
+    }
+
+    .key-points-list li {
+      position: relative;
+      padding-right: 18px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 6px;
+      text-align: justify;
+    }
+
+    .key-points-list li::before {
+      content: "•";
+      position: absolute;
+      right: 4px;
+      color: var(--accent-color);
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">ب</div>
+      <span class="brand-name">بىلىم</span>
+      <span class="brand-tag">V3</span>
+    </div>
+    <button class="theme-toggle-btn" id="themeToggleBtn" title="كۈندۈز / كېچە ھالىتى">
+      🌓
+    </button>
+  </header>
+
+  <div class="settings-panel">
+    <div class="settings-toggle" id="settingsToggle">
+      <span>تەڭشەك ۋە سۈنئىي ئىدراك ئاچقۇچى</span>
+      <span id="settingsArrow">▼</span>
+    </div>
+    <div class="settings-content" id="settingsContent">
+      <p style="font-size: 11px; color: var(--text-muted);">
+        مەخپىيەتلىك كاپالىتى: ئاچقۇچىڭىز پەقەت ئۆز كۆرسەتكۈچىڭىزدە ساقلىنىدۇ، ھېچقانداق سىرتقى تەھلىل مۇلازىمېتىرىغا بېرىلمەيدۇ.
+      </p>
+      <input type="password" id="apiKeyInput" class="api-input" placeholder="OpenAI / Gemini API Key (ئىختىيارىي)">
+      <button id="saveApiBtn" class="api-save-btn">ساقلاش</button>
+    </div>
+  </div>
+
+  <div class="action-grid">
+    <button id="summarizeBtn" class="btn btn-primary">
+      <span>⚡ تور بەتنى يىغىنچاقلاش</span>
+    </button>
+    <button id="ttsPlayBtn" class="btn btn-secondary">
+      <span>🔊 ئاۋازدا ئوقۇش</span>
+    </button>
+    <button id="ttsStopBtn" class="btn btn-danger">
+      <span>⏹ توختىتىش</span>
+    </button>
+  </div>
+
+  <div id="statusBadge" class="status-badge">مەزمۇن يىغىنچاقلاشقا تەييار</div>
+
+  <main id="resultContainer" class="result-container" style="display: none;">
+    <div class="section-title">
+      <span>📌 ئاساسىي مەزمۇن خۇلاسىسى</span>
+    </div>
+    <div id="summaryText" class="content-paragraph"></div>
+
+    <div class="section-title" style="margin-top: 14px;">
+      <span>💡 يادرولۇق نۇقتىلار</span>
+    </div>
+    <ul id="keyPointsList" class="key-points-list"></ul>
+
+    <div class="meta-box">
+      <div class="meta-item">
+        <strong>مەنبە تور بېتى:</strong> <span id="metaSourceTitle">نامەلۇم</span>
+      </div>
+      <div class="meta-item">
+        <strong>ئۇلانما:</strong> <a href="#" id="metaSourceUrl" class="source-link" target="_blank">-</a>
+      </div>
+      <div class="meta-item">
+        <strong>مۇناسىۋەتلىك تېمىلار:</strong> <span id="metaRelated">شەرقىي تۈركىستان، پەن-تېخنىكا، خەلقئارا ئەھۋاللار</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    «بىلىم» - شەرقىي تۈركىستان ئۈچۈن ساپ ۋە دەخلىسىز پەن-تېخنىكا
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

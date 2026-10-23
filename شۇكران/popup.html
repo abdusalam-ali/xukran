@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>شۇكران</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent-bg: rgba(56, 189, 248, 0.12);
+      --tag-bg: rgba(255, 255, 255, 0.06);
+      --shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 370px;
+      min-height: 480px;
+      background: radial-gradient(circle at 50% 0%, #1e293b, var(--bg-color));
+      color: var(--text-main);
+      font-family: 'UKIJ Tuz', 'ALKATIP Basma', 'Uyghur Pashto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+      padding: 16px;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+
+    .header-badge {
+      font-size: 11px;
+      background: var(--accent-bg);
+      color: var(--primary);
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 42px 12px 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+    }
+
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 8px;
+      transition: color 0.2s;
+    }
+
+    .search-btn:hover {
+      color: var(--primary);
+    }
+
+    .quick-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .tag-item {
+      font-size: 11px;
+      background: var(--tag-bg);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tag-item:hover {
+      background: var(--accent-bg);
+      color: var(--primary);
+      border-color: rgba(56, 189, 248, 0.2);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .word-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .word-main {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .audio-btn {
+      background: var(--accent-bg);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .audio-btn:hover {
+      background: var(--primary);
+      color: #0b0f19;
+      transform: scale(1.05);
+    }
+
+    .translation-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .trans-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trans-label {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .trans-val {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .explanation-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    .explanation-text {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #cbd5e1;
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 1.8em;
+    }
+
+    .meta-box {
+      border-top: 1px solid var(--card-border);
+      padding-top: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-title">شۇكران</div>
+    <div class="header-badge">مەخپىي & بىخەتەر</div>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" class="search-input" placeholder="سۆز كىرگۈزۈڭ..." autofocus autocomplete="off">
+    <button id="searchBtn" class="search-btn" aria-label="ئىزدەش">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="quick-tags" id="quickTags">
+    <span class="tag-item" data-word="شۈكۈر">شۈكۈر</span>
+    <span class="tag-item" data-word="ئەركىنلىك">ئەركىنلىك</span>
+    <span class="tag-item" data-word="ۋەتەن">ۋەتەن</span>
+    <span class="tag-item" data-word="ئىلىم">ئىلىم</span>
+    <span class="tag-item" data-word="تەۋەككۈل">تەۋەككۈل</span>
+  </div>
+
+  <main id="resultContainer" class="card">
+    <div class="empty-state">
+      ئىزدەيدىغان سۆزنى يېزىپ «ئىزدەش»نى بېسىڭ ياكى تېز تاللاشلارنى چېكىڭ.
+    </div>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

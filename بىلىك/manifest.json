@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "ئىلىك - تور تەرجىمانى ۋە قوغدىغۇچى",
+  "version": "3.0.0",
+  "description": "پۈتۈن تور بەت مەزمۇنلىرىنى تولۇق ۋە كاپالەتلىك ئۇيغۇرچىغا ئۆرۈش، ئېلانلارنى سۈزۈش ۋە كود ئانالىزچىسى.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ئىلىك"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self';"
+  }
+}

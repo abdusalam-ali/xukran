@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "شۇكران",
+  "version": "1.1.0",
+  "description": "دۇنيادىكى بارلىق تىللاردىكى سۆزلەرنى تونۇش، ئۇيغۇرچە شەرھلەش، ئەرەبچە، ئىنگلىزچە ۋە خىتاي تىلىغا تەرجىمە قىلىش قىستۇرمىسى.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "شۇكران تەرجىمانى"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.mymemory.translated.net/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قارام</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(22, 30, 49, 0.72);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --primary-glow: rgba(56, 189, 248, 0.22);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.18);
+      --amber: #f59e0b;
+      --font-family: 'UKIJ Tuz', 'ALKATIP Basma', 'Uyghur Pashto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(226, 232, 240, 0.85);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --emerald: #059669;
+      --emerald-glow: rgba(5, 150, 105, 0.12);
+      --amber: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      width: 375px;
+      min-height: 570px;
+      max-height: 600px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      direction: rtl;
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    /* نۇر قايتۇرۇش لايىھەسى */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 160px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 12px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 19px;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .brand-info h1 {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .brand-info span {
+      font-size: 10.5px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .icon-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    /* نۆۋەتتىكى بايقىلغان سۇپا كارتىسى */
+    .platform-card {
+      position: relative;
+      z-index: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(14px);
+    }
+
+    .platform-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    .platform-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .platform-badge {
+      font-size: 11px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* بەت تاللىغۇچ (Tabs) */
+    .nav-bar {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-item {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .tab-pane {
+      position: relative;
+      z-index: 1;
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ماھارەتلەر تىزىملىكى */
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 330px;
+      overflow-y: auto;
+      padding-left: 2px;
+    }
+
+    .skill-item {
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .skill-item:hover {
+      border-color: var(--primary);
+    }
+
+    .skill-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .skill-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .skill-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .skill-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 6px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .skill-code-box {
+      background: #050811;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-family: Consolas, monospace;
+      font-size: 11px;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .mini-copy-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 10px;
+      cursor: pointer;
+      direction: rtl;
+    }
+
+    .mini-copy-btn:hover {
+      background: var(--primary);
+    }
+
+    /* بۇيرۇق ياسىغۇچ بۆلىكى */
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .input-box, .select-box, .textarea-box {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--text);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .input-box:focus, .select-box:focus, .textarea-box:focus {
+      border-color: var(--primary);
+    }
+
+    .textarea-box {
+      resize: vertical;
+      min-height: 60px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: white;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* نەتىجە كارتىسى ۋە ئۇيغۇرچە تەڭلەش */
+    .output-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 12.5px;
+      line-height: 1.85;
+      color: var(--text);
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 1.8em;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    .toast-msg {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 6px;
+      min-height: 18px;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <header>
+    <div class="brand-wrap">
+      <div class="brand-logo">ق</div>
+      <div class="brand-info">
+        <h1>قارام</h1>
+        <span>QARAM • AI PROMPT PRO</span>
+      </div>
+    </div>
+    <button class="icon-btn" id="themeBtn" title="كۈندۈز / كېچە">🌓</button>
+  </header>
+
+  <!-- سۇپا بايقاش قىسمى -->
+  <div class="platform-card">
+    <div class="platform-info">
+      <div class="status-dot"></div>
+      <div>
+        <div class="platform-name" id="detectedName">تەكشۈرۈلۈۋاتىدۇ...</div>
+      </div>
+    </div>
+    <span class="platform-badge" id="detectedType">ئاكتىپ سۇپا</span>
+  </div>
+
+  <nav class="nav-bar">
+    <button class="nav-item active" data-tab="tabSkills">خاس ماھارەتلەر</button>
+    <button class="nav-item" data-tab="tabBuilder">بۇيرۇق تۈزگۈچ</button>
+  </nav>
+
+  <!-- 1-بۆلەك: خاس ماھارەتلەر ۋە يوشۇرۇن بۇيرۇقلار -->
+  <main id="tabSkills" class="tab-pane active">
+    <div class="glass-card">
+      <div class="card-header">
+        <span id="skillsHeading">بايقالغان سۇپىنىڭ يوشۇرۇن پارامېتىرلىرى</span>
+      </div>
+      <div class="skills-list" id="skillsContainer">
+        <!-- ماھارەت كارتىلىرى JavaScript ئارقىلىق تولدۇرۇلىدۇ -->
+      </div>
+    </div>
+  </main>
+
+  <!-- 2-بۆلەك: سۈنئىي ئەقىلگە مۇكەممەل بۇيرۇق يېزىپ بېرىش -->
+  <main id="tabBuilder" class="tab-pane">
+    <div class="glass-card">
+      <div class="form-group">
+        <label class="form-label">سىز ئېرىشمەكچى بولغان نىشان ياكى تېما:</label>
+        <textarea id="targetGoal" class="textarea-box" placeholder="مەسىلەن: شەرقىي تۈركىستان تارىخى ھەققىدە ئىلمىي ئوبزور ياز؛ ياكى Python دا بىخەتەر پارول باشقۇرغۇچى قۇر..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">سۈنئىي ئەقىلنىڭ سالاھىيىتى (رولى):</label>
+        <select id="aiRole" class="select-box">
+          <option value="Senior_Expert">ئالىي دەرىجىلىك ئىلمىي تەتقىقاتچى ۋە ئارخىتېكتور</option>
+          <option value="Cyber_Security">ئالىي دەرىجىلىك تور بىخەتەرلىكى ۋە كود ئاۋدىتورى</option>
+          <option value="History_Scholar">تارىخ ۋە مەدەنىيەت بويىچە بىلىمدان پروفېسسور</option>
+          <option value="Business_Analyst">سودا-ئىقتىساد ئىستراتېگىيە ئانالىزچىسى</option>
+          <option value="Socratic_Tutor">سوكراتچە سوئال-جاۋاب ئۇسلۇبىدىكى تىرېنېر</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">تەپەككۇر ۋە قايتۇرۇش ئۇسلۇبى:</label>
+        <select id="reasoningMode" class="select-box">
+          <option value="CoT">قەدەممۇقەدەم چوڭقۇر تەپەككۇر قىلىش (Chain-of-Thought)</option>
+          <option value="FewShot">مۇكەممەل ئۈلگە ئاساسىدا ھەل قىلىش (Few-Shot)</option>
+          <option value="DirectClean">ئارتۇق سۆزسىز پاكىت ۋە نەتىجىنىلا بېرىش (Direct)</option>
+        </select>
+      </div>
+
+      <button id="generatePromptBtn" class="btn btn-primary">
+        <span>⚡ مۇكەممەل بۇيرۇقنى ھاسىل قىلىش</span>
+      </button>
+
+      <div id="outputArea" style="display: none;">
+        <div class="output-box" id="generatedPromptText"></div>
+        <button id="copyPromptBtn" class="btn btn-secondary" style="margin-top: 8px;">
+          <span>📋 بۇيرۇقنى كۆچۈرۈۋېلىش</span>
+        </button>
+      </div>
+
+      <div class="toast-msg" id="toastMsg">تەييار</div>
+    </div>
+  </main>
+
+  <footer>
+    «قارام» - ئەركىن تەپەككۇر ۋە مۇستەقىل ئىلىم-پەن كاپالىتى
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

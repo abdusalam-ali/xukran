@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ئىلىك</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(22, 30, 49, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --primary-glow: rgba(56, 189, 248, 0.25);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --danger: #f43f5e;
+      --font-family: 'UKIJ Tuz', 'ALKATIP Basma', 'Uyghur Pashto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --emerald: #059669;
+      --emerald-glow: rgba(5, 150, 105, 0.15);
+      --danger: #e11d48;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    body {
+      width: 375px;
+      min-height: 560px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      direction: rtl;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 14px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .brand-info h1 {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .brand-info span {
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .theme-btn {
+      width: 34px;
+      height: 34px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 14px;
+    }
+
+    .nav-item {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .input-box {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      border-radius: 9px;
+      padding: 9px 12px;
+      color: var(--text);
+      font-size: 12.5px;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    .input-box:focus {
+      border-color: var(--primary);
+    }
+
+    .status-badge {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .stat-hero {
+      text-align: center;
+      padding: 14px 0;
+      background: var(--emerald-glow);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .stat-hero .num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--emerald);
+    }
+
+    .stat-hero .lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .result-text {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 12.5px;
+      line-height: 1.9;
+      color: var(--text);
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 1.8em;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 8px;
+    }
+
+    .code-box {
+      font-family: Consolas, monospace;
+      font-size: 11px;
+      direction: ltr;
+      text-align: left;
+      background: #050811;
+      color: #38bdf8;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <header>
+    <div class="brand-wrap">
+      <div class="brand-logo">ئ</div>
+      <div class="brand-info">
+        <h1>ئىلىك</h1>
+        <span>ELIK • V3.0</span>
+      </div>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="كۈندۈز / كېچە">🌓</button>
+  </header>
+
+  <nav class="nav-bar">
+    <button class="nav-item active" data-tab="tabTranslate">تەرجىمە</button>
+    <button class="nav-item" data-tab="tabAdblock">ئېلان قوغداش</button>
+    <button class="nav-item" data-tab="tabCode">بەت كودى</button>
+  </nav>
+
+  <!-- 1-بۆلەك: تەرجىمە -->
+  <main id="tabTranslate" class="tab-pane active">
+    <div class="glass-card">
+      <div class="card-title">🌐 پۈتۈن تور بەتنى تەرجىمە قىلىش</div>
+      
+      <!-- 100% كاپالەتلىك ئۇسۇل: Chrome چەكلىمىسىنى بېسىپ پۈتۈن بەتنى ئۇيغۇرچە كۆرسىتىش -->
+      <button id="translateWholePageBtn" class="btn btn-primary" style="margin-bottom: 8px;">
+        <span>🚀 پۈتۈن بەتنى تەرجىمە قىلىپ ئېچىش</span>
+      </button>
+
+      <!-- نۆۋەتتىكى بەتنىڭ ئاساسىي تېكىستلىرىنى تەرجىمە قىلىپ يۇقىرىغا چىقىرىش -->
+      <button id="extractTranslateBtn" class="btn btn-secondary">
+        <span>📑 نۆۋەتتىكى بەتنى كۆزنەكتە تەرجىمە قىلىش</span>
+      </button>
+
+      <div id="translateStatus" class="status-badge">بەت ئوقۇشقا تەييار</div>
+      <div id="liveTranslateResult" class="result-text" style="display: none;"></div>
+    </div>
+
+    <div class="glass-card">
+      <div class="card-title">📖 ئايرىم سۆز ۋە جۈملە تەرجىمانى</div>
+      <input type="text" id="dictInput" class="input-box" placeholder="سۆز كىرگۈزۈڭ...">
+      <button id="dictBtn" class="btn btn-secondary">تەرجىمە قىلىش</button>
+      <div id="dictOutput" class="result-text" style="display: none;"></div>
+    </div>
+  </main>
+
+  <!-- 2-بۆلەك: ئېلان چەكلەش -->
+  <main id="tabAdblock" class="tab-pane">
+    <div class="glass-card">
+      <div class="card-title">🛡️ چەكلەنگەن ئېلان ۋە قىستۇرمىلار</div>
+      <div class="stat-hero">
+        <div class="num" id="blockedCountDisplay">0</div>
+        <div class="lbl">تازىلانغان ئېلان سانى</div>
+      </div>
+      <button id="cleanAdsBtn" class="btn btn-primary" style="margin-bottom: 8px;">
+        <span>🧹 بەتتىكى ئېلانلارنى تازىلاش</span>
+      </button>
+      <button id="resetAdsBtn" class="btn btn-secondary">ساناقچىنى نۆللەش</button>
+      <div id="adStatus" class="status-badge">ئېلان مۇداپىئەسى تەييار</div>
+    </div>
+  </main>
+
+  <!-- 3-بۆلەك: بەت كودى -->
+  <main id="tabCode" class="tab-pane">
+    <div class="glass-card">
+      <div class="card-title">💻 تور بەت مەنبە كودى (HTML)</div>
+      <button id="fetchCodeBtn" class="btn btn-primary" style="margin-bottom: 8px;">
+        <span>🔍 كودنى سۈزۈپ ئېلىش</span>
+      </button>
+      <button id="copyCodeBtn" class="btn btn-secondary" style="margin-bottom: 8px; display: none;">
+        <span>📋 كودنى كۆچۈرۈۋېلىش</span>
+      </button>
+      <pre id="codeView" class="code-box" style="display: none;"></pre>
+      <div id="codeStatus" class="status-badge">كود ئوقۇلمىدى</div>
+    </div>
+  </main>
+
+  <footer>
+    «ئىلىك» - مۇستەقىل، بىخەتەر ۋە ساپ شەرقىي تۈركىستان ئۆلچىمى
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
